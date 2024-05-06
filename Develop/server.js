@@ -1,28 +1,26 @@
 const express = require("express");
 const fs = require("fs");
+const path = require(`path`);
+const api = require("./route");
 
-app.get('/public/notes', (req, res) => {
+const app = express();
+const PORT = process.env.PORT || 3001;
 
-  import {promises as fs} from `fs`;
-  export default async function Page() {
-    const file = await fs.readFile(process.cwd() + `/public/notes.html`, `utf8`);
-    const data = JSON.parse(file);
-    
-    return{
-      [
-        {
-            "title":"Test Title",
-            "text":"Test text"
-        }
-    ]
-    };
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(`/api`, api);
+app.use(express. static(`public`));
 
-  }
+app.get(`/`, (req, res) =>
+res.sendFile(path.join(__dirname, `/public/index.html`))
+);
 
-  });
-
-app.get(`/public/index.html`, (req, res) => {
-
-  
-
+app.get('/notes', (req, res) => {
+  res.sendFile(path.join(__dirname, `/public/notes.html`))
 });
+
+app.get(`/notes`, (req, res) => 
+  res.sendFile(path.join(__dirname, `/public/notes.html`))
+);
+
+app.listen(PORT, () => console.log(`Running Express server at http://localhost${PORT}`));
