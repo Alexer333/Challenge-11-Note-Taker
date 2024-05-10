@@ -24,3 +24,4 @@ app.get(`/notes`, (req, res) =>
 );
 
 app.listen(PORT, () => console.log(`Running Express server at http://localhost${PORT}`));
+
